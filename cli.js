@@ -16,7 +16,8 @@ const step_type = {
   type: 'autocomplete',
   name: 'commit_type',
   message: 'Pick a commit type.',
-  choices: typesList
+  choices: typesList,
+  fallback: 'No matched type.'
 }
 
 const step_message = {
