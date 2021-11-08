@@ -66,14 +66,22 @@ const step_jira_id = {
     step_is_jira,
     step_jira_id
   ], {
+    onSubmit: (prompt, answers) => {
+      if (answers === undefined) {
+        isCanceled = true
+        return true
+      }
+    },
     onCancel: (prompt) => {
-      console.log(chalk.red(' === think twice before commit === '))
       isCanceled = true
       return false
     }
   })
 
-  if (isCanceled) return false
+  if (isCanceled) {
+    console.log(chalk.magentaBright(' commit abort. '))
+    return false
+  }
 
   const { commit_type, commit_message, is_jira, jira_id } = response
   const type = typesList.find(type => type.value === commit_type)
