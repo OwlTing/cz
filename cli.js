@@ -80,6 +80,7 @@ const step_jira_id = {
     : msg
 
   try {
+    console.log(chalk.green(result))
     await execa('git', ['commit', '-m', result])
   } catch (error) {
     if (error.exitCode === 1) console.log(chalk.bgRed.white(' Nothing to commit. '))
