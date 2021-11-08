@@ -83,8 +83,8 @@ const step_jira_id = {
 
   try {
     const commitResult = await execa('git', ['commit', '-m', result])
-    const brachHash = commitResult.stdout.match(/\[(.*)\]/).pop()
-    const [branchName, branchHash] = brachHash.split(' ')
+    const branchHashName = commitResult.stdout.match(/\[(.*)\]/).pop()
+    const [branchName, branchHash] = branchHashName.split(' ')
 
     console.log(chalk.green(result))
     console.log(chalk.bold(branchName), chalk.bgCyanBright.black(` ${branchHash} `))
