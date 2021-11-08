@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const prompts = require('prompts')
 const execa = require('execa')
 const types = require('./types')
