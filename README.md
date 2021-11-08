@@ -23,7 +23,7 @@ cz
 
 ## Types
 
-```json
+```
 {
   name: 'chore',
   emoji: '🧹',
