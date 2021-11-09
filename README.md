@@ -1,4 +1,6 @@
 # create commit
+![](https://img.shields.io/badge/node-%5E14-brightgreen.svg)
+
 create commit in human way.
 
 ~~only apply for OWLPAY currently~~
@@ -14,7 +16,6 @@ yarn add global OwlTing/cz
 #pnpm
 pnpm install -g OwlTing/cz
 ```
-> requires node ^14
 
 ## Usage
 ```shell
