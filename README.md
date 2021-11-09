@@ -116,3 +116,4 @@ input Jira issue ID
 ## Todo
 
 - [ ] adapt for other projects prefix
+- [ ] unit test
