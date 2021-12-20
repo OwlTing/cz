@@ -1,9 +1,20 @@
 #!/usr/bin/env node
-
 const prompts = require('prompts')
 const execa = require('execa')
 const types = require('./types')
+const projects = require('./projects')
 const chalk = require('chalk')
+
+const fs = require('fs')
+
+let defaultProjectValue = ''
+try {
+  const config = fs.readFileSync('./cz_config.json')
+  defaultProjectValue = JSON.parse(config).defaultProject
+} catch (e) {
+  console.log(chalk.red('No cz_config.json found.'))
+  defaultProjectValue = ''
+}
 
 const typesList = types.map(type => ({
   title: type.name,
@@ -38,8 +49,37 @@ const step_message = {
 const step_is_jira = {
   type: 'confirm',
   name: 'is_jira',
-  message: 'Tag OWLPAY Jira issue ?',
+  message: 'Tag Jira issue ?',
   initial: false
+}
+
+const projectsList = projects.map(project => ({
+  title: project.name,
+  description: `[${project.prefix}-13845] title`,
+  value: project.value
+}))
+const defaultProject = projectsList.find(project => project.value === defaultProjectValue) || {}
+
+const step_is_default_project = {
+  type: prev => prev ? 'confirm' : null,
+  name: 'is_default_project',
+  message: `use '${defaultProject.title}' pattern? e.g. ${defaultProject.description}`,
+  initial: true
+}
+
+const step_project_type = {
+  type: (prev, { is_jira }) => {
+    return is_jira
+      ? defaultProject.value && prev
+        ? null
+        : 'autocomplete'
+      : null
+  },
+  name: 'project_type',
+  message: 'Pick a project type.',
+  choices: projectsList,
+  initial: 'owlpay',
+  fallback: 'No matched project.'
 }
 
 const step_jira_id = {
@@ -60,12 +100,15 @@ const step_jira_id = {
 ;(async () => {
   let isCanceled = false
 
-  const response = await prompts([
+  const order = [
     step_type,
     step_message,
     step_is_jira,
+    defaultProject.value ? step_is_default_project : null,
+    step_project_type,
     step_jira_id
-  ], {
+  ].filter(Boolean)
+  const response = await prompts(order, {
     onSubmit: (prompt, answers) => {
       if (answers === undefined) {
         isCanceled = true
@@ -83,11 +126,13 @@ const step_jira_id = {
     return false
   }
 
-  const { commit_type, commit_message, is_jira, jira_id } = response
+  const { commit_type, commit_message, is_jira, is_default_project, project_type, jira_id } = response
   const type = typesList.find(type => type.value === commit_type)
   const msg = `${type.emoji} ${commit_type}: ${commit_message}`
+  const typeResponse = is_default_project ? defaultProject.value : project_type
+  const projectType = projects.find(project => project.value === typeResponse)
   const result = is_jira
-    ? `[OWLPAY-${jira_id}] ${msg}`
+    ? `[${projectType.prefix}-${jira_id}] ${msg}`
     : msg
 
   try {
