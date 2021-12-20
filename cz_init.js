@@ -42,7 +42,7 @@ const step_type = {
 
   try {
     fs.writeFileSync(
-      '/tmp/cz_config.json',
+      `${__dirname}/cz_config.json`,
       `${JSON.stringify({ defaultProject: set_default_project } || {}, null, 2)}`,
     )
     console.log(chalk.green(` default project set: ${set_default_project} `))

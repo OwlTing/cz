@@ -4,12 +4,12 @@ const execa = require('execa')
 const types = require('./types')
 const projects = require('./projects')
 const chalk = require('chalk')
-
 const fs = require('fs')
+
 
 let defaultProjectValue = ''
 try {
-  const config = fs.readFileSync('/tmp/cz_config.json')
+  const config = fs.readFileSync(`${__dirname}/cz_config.json`)
   defaultProjectValue = JSON.parse(config).defaultProject
 } catch (e) {
   console.log(chalk.red(' 💡 You can try `czinit` to choose a default project prefix. '))
