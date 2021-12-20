@@ -9,10 +9,10 @@ const fs = require('fs')
 
 let defaultProjectValue = ''
 try {
-  const config = fs.readFileSync('./cz_config.json')
+  const config = fs.readFileSync('/tmp/cz_config.json')
   defaultProjectValue = JSON.parse(config).defaultProject
 } catch (e) {
-  console.log(chalk.red('No cz_config.json found.'))
+  console.log(chalk.red(' 💡 You can try `czinit` to choose a default project prefix. '))
   defaultProjectValue = ''
 }
 
