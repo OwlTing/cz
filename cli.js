@@ -3,6 +3,7 @@
 const prompts = require('prompts')
 const execa = require('execa')
 const types = require('./types')
+const projects = require('./projects')
 const chalk = require('chalk')
 
 const typesList = types.map(type => ({
@@ -10,6 +11,12 @@ const typesList = types.map(type => ({
   description: `${type.emoji} ${type.description}`,
   value: type.value,
   emoji: type.emoji
+}))
+
+const projectsList = projects.map(project => ({
+  title: project.name,
+  prefix: project.prefix,
+  value: project.value
 }))
 
 const step_type = {
@@ -38,8 +45,17 @@ const step_message = {
 const step_is_jira = {
   type: 'confirm',
   name: 'is_jira',
-  message: 'Tag OWLPAY Jira issue ?',
+  message: 'Tag Jira issue ?',
   initial: false
+}
+
+const step_project_type = {
+  type: prev => prev ? 'autocomplete' : null,
+  name: 'project_type',
+  message: 'Pick a project type.',
+  choices: projectsList,
+  initial: 'owlpay',
+  fallback: 'No matched project.'
 }
 
 const step_jira_id = {
@@ -64,6 +80,7 @@ const step_jira_id = {
     step_type,
     step_message,
     step_is_jira,
+    step_project_type,
     step_jira_id
   ], {
     onSubmit: (prompt, answers) => {
@@ -83,11 +100,12 @@ const step_jira_id = {
     return false
   }
 
-  const { commit_type, commit_message, is_jira, jira_id } = response
+  const { commit_type, commit_message, is_jira, project_type, jira_id } = response
   const type = typesList.find(type => type.value === commit_type)
+  const projectType = projectsList.find(project => project.value === project_type)
   const msg = `${type.emoji} ${commit_type}: ${commit_message}`
   const result = is_jira
-    ? `[OWLPAY-${jira_id}] ${msg}`
+    ? `[${projectType.prefix}-${jira_id}] ${msg}`
     : msg
 
   try {
