@@ -1,0 +1,1 @@
+console.log(`Your config will be saved in ${__dirname}.`)

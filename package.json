@@ -10,7 +10,8 @@
 	"main": "cli.js",
 	"bin": {
 		"cz": "cli.js",
-		"czinit": "cz_init.js"
+		"czinit": "cz_init.js",
+		"czwhere": "cz_where.js"
 	},
 	"keywords": [
 		"cli",
