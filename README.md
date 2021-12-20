@@ -3,8 +3,6 @@
 
 create commit in human way.
 
-~~only apply for OWLPAY currently~~
-
 ## Install
 ```shell
 # npm
@@ -18,11 +16,18 @@ pnpm install -g OwlTing/cz
 ```
 
 ## Usage
+### preset default prefix
+support OwlPay and OwlNest currently
+```shell
+czinit
+```
+![image](https://user-images.githubusercontent.com/45550113/146726582-2b9cb2f7-e87a-400d-9bd8-afaed8ed44a9.png)
+
+### Step 1
+pick a commit type
 ```shell
 cz
 ```
-### Step 1
-pick a commit type
 
 ![image](https://user-images.githubusercontent.com/45550113/140848819-8b115e2b-3972-433d-8ae8-f8a4925c0f1d.png)
 
@@ -32,11 +37,23 @@ commit message
 ![image](https://user-images.githubusercontent.com/45550113/140848900-98233775-7707-48af-917b-ccff016b63ff.png)
 
 ### Step 3
+
 if need to tag Jira issue for title prefix
 
-![image](https://user-images.githubusercontent.com/45550113/140849139-c77c6a4b-695e-40b3-8951-35ab81e6b242.png)
+![image](https://user-images.githubusercontent.com/45550113/146734689-bbba35f3-3d44-406f-aa31-716cdfd0c576.png)
 
-### Step 4 (if !!Step3)
+### Step 4  (if !!Step3)
+
+use default prefix
+
+![image](https://user-images.githubusercontent.com/45550113/146734936-7edf55b1-1d29-4b56-856d-ae8b8bbba1f3.png)
+
+or use select another project
+
+![image](https://user-images.githubusercontent.com/45550113/146735104-4c264618-ceac-476d-bedd-9301ca305e95.png)
+
+
+### Step 5  (if !!Step3)
 input Jira issue ID
 
 ![image](https://user-images.githubusercontent.com/45550113/140849306-ed60d5b1-cf15-4be5-801e-2dd186408ac9.png)
@@ -115,5 +132,5 @@ input Jira issue ID
 
 ## Todo
 
-- [ ] adapt for other projects prefix
+- [x] adapt for other projects prefix
 - [ ] unit test
