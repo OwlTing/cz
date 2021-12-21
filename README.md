@@ -127,6 +127,12 @@ input Jira issue ID
   emoji: '🎮',
   description: 'Adding missing tests',
   value: 'test'
+},
+{
+  name: 'storybook',
+  emoji: '📚',
+  description: 'New storybook',
+  value: 'story'
 }
 ```
 
