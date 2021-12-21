@@ -64,5 +64,11 @@ module.exports = [
     emoji: '🎮',
     description: 'Adding missing tests',
     value: 'test'
+  },
+  {
+    name: 'storybook',
+    emoji: '📚',
+    description: 'New storybook',
+    value: 'story'
   }
 ]
