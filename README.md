@@ -11,9 +11,29 @@ npm install -g OwlTing/cz
 # yarn
 yarn add global OwlTing/cz
 
-#pnpm
+# pnpm
 pnpm install -g OwlTing/cz
 ```
+
+## Uninstall
+```shell
+# npm
+npm uninstall -g owlting_cz
+
+# yarn
+yarn remove global owlting_cz
+
+# pnpm
+pnpm uninstall -g owlting_cz
+```
+
+## Commands
+
+| command | description             |
+| ------- | ----------------------- |
+| czinit  | preset project template |
+| cz      | start commit            |
+| czwhere | find cz location        |
 
 ## Usage
 ### preset default prefix
@@ -42,18 +62,18 @@ if need to tag Jira issue for title prefix
 
 ![image](https://user-images.githubusercontent.com/45550113/146734689-bbba35f3-3d44-406f-aa31-716cdfd0c576.png)
 
-### Step 4  (if !!Step3)
+### Step 4  (if Step3)
 
 use default prefix
 
 ![image](https://user-images.githubusercontent.com/45550113/146734936-7edf55b1-1d29-4b56-856d-ae8b8bbba1f3.png)
 
-or use select another project
+or select another project
 
 ![image](https://user-images.githubusercontent.com/45550113/146735104-4c264618-ceac-476d-bedd-9301ca305e95.png)
 
 
-### Step 5  (if !!Step3)
+### Step 5  (if Step3)
 input Jira issue ID
 
 ![image](https://user-images.githubusercontent.com/45550113/140849306-ed60d5b1-cf15-4be5-801e-2dd186408ac9.png)
@@ -135,6 +155,7 @@ input Jira issue ID
   value: 'story'
 }
 ```
+#### Inspired by [cz-cli](https://github.com/commitizen/cz-cli)
 
 ## Todo
 
