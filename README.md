@@ -9,7 +9,7 @@ create commit in human way.
 npm install -g OwlTing/cz
 
 # yarn
-yarn add global OwlTing/cz
+yarn global add OwlTing/cz
 
 # pnpm
 pnpm install -g OwlTing/cz
