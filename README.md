@@ -9,11 +9,13 @@ create commit in human way.
 npm install -g OwlTing/cz
 
 # yarn
-yarn add global OwlTing/cz
+yarn global add OwlTing/cz
 
 # pnpm
 pnpm install -g OwlTing/cz
 ```
+
+> Add `export PATH="$(yarn global bin):$PATH"` to your `~./zshrc` if you installed it by yarn global
 
 ## Uninstall
 ```shell
@@ -21,7 +23,7 @@ pnpm install -g OwlTing/cz
 npm uninstall -g owlting_cz
 
 # yarn
-yarn remove global owlting_cz
+yarn global remove owlting_cz
 
 # pnpm
 pnpm uninstall -g owlting_cz
