@@ -8,5 +8,10 @@ module.exports = [
     name: 'OwlNest',
     prefix: 'OW',
     value: 'owlnest'
+  },
+  {
+    name: 'Market',
+    prefix: 'MAR',
+    value: 'market'
   }
 ]
