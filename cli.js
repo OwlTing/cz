@@ -139,10 +139,17 @@ const step_jira_id = {
     const commitResult = await execa('git', ['commit', '-m', result])
     const branchHashName = commitResult.stdout.match(/\[(.*)\]/).pop()
     const [branchName, branchHash] = branchHashName.split(' ')
-
+    console.log('-----------------------------------------------------------')
+    console.log(chalk(commitResult.stdout))
+    if (commitResult.stderr !== '') {
+      console.log('-----------------------------------------------------------')
+      console.log(chalk(commitResult.stderr))
+    }
+    console.log('-----------------------------------------------------------')
     console.log(chalk.green(result))
     console.log(chalk.bold(branchName), chalk.bgCyanBright.black(` ${branchHash} `))
   } catch (error) {
+    console.log(chalk.redBright(error.stderr))
     if (error.exitCode === 1) console.log(chalk.bgRed.white(' Nothing to commit. '))
     else console.error(error)
   }
