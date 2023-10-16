@@ -13,5 +13,10 @@ module.exports = [
     name: 'Market',
     prefix: 'MAR',
     value: 'market'
+  },
+  {
+    name: 'PayNow',
+    prefix: 'PN',
+    value: 'paynow'
   }
 ]
