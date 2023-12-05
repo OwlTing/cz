@@ -18,5 +18,10 @@ module.exports = [
     name: 'PayNow',
     prefix: 'PN',
     value: 'paynow'
+  },
+  {
+    name: 'Wallet Pro',
+    prefix: 'WP',
+    value: 'wallet-pro'
   }
 ]
