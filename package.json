@@ -1,23 +1,23 @@
 {
 	"name": "owlting_cz",
-	"version": "1.4.0",
+	"version": "2.0.0",
 	"description": "create-commit for OwlTing",
 	"dependencies": {
 		"chalk": "^4.1.2",
 		"execa": "^5.1.1",
-		"prompts": "^2.4.2"
+		"prompts": "^2.4.2",
+		"yargs": "^17.7.2"
 	},
-	"main": "cli.js",
+	"main": "index.js",
 	"bin": {
-		"cz": "cli.js",
-		"czinit": "cz_init.js",
-		"czwhere": "cz_where.js"
+		"cz": "index.js"
 	},
 	"keywords": [
 		"cli",
 		"jira",
-		"OwlPay",
-		"OwlNest"
+		"commitizen",
+		"prompt",
+		"commit"
 	],
 	"author": "Nick"
 }

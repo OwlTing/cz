@@ -51,18 +51,22 @@ bun remove -g owlting_cz
 ```
 
 ## Commands
-
-| command | description             |
-| ------- | ----------------------- |
-| czinit  | preset project template |
-| cz      | start commit            |
-| czwhere | find cz location        |
+```shell
+cz [Options]
+```
+```shell
+Options:
+      --version  Show version number
+  -i, --init     Set default project prefix.
+  -w, --where    Show config file path.
+      --help     Show help
+```
 
 ## Usage
 ### preset default prefix
 support OwlPay and OwlNest currently
 ```shell
-czinit
+cz -i
 ```
 ![image](https://user-images.githubusercontent.com/45550113/146726582-2b9cb2f7-e87a-400d-9bd8-afaed8ed44a9.png)
 

@@ -6,15 +6,7 @@ const projects = require('./projects')
 const chalk = require('chalk')
 const fs = require('fs')
 
-
 let defaultProjectValue = ''
-try {
-  const config = fs.readFileSync(`${__dirname}/cz_config.json`)
-  defaultProjectValue = JSON.parse(config).defaultProject
-} catch (e) {
-  console.log(chalk.red(' 💡 You can try `czinit` to choose a default project prefix. '))
-  defaultProjectValue = ''
-}
 
 const typesList = types.map(type => ({
   title: type.name,
@@ -97,9 +89,16 @@ const step_jira_id = {
   }
 }
 
-;(async () => {
-  let isCanceled = false
+module.exports = async () => {
+  try {
+    const config = fs.readFileSync(`${__dirname}/cz_config.json`)
+    defaultProjectValue = JSON.parse(config).defaultProject
+  } catch (e) {
+    console.log(chalk.red(' 💡 You can try `cz -i` to choose a default project prefix. '))
+    defaultProjectValue = ''
+  }
 
+  let isCanceled = false
   const order = [
     step_type,
     step_message,
@@ -153,4 +152,4 @@ const step_jira_id = {
     if (error.exitCode === 1) console.log(chalk.bgRed.white(' Nothing to commit. '))
     else console.error(error)
   }
-})()
+}

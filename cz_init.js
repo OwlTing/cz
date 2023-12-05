@@ -18,7 +18,7 @@ const step_type = {
   fallback: 'No matched project.'
 }
 
-;(async () => {
+module.exports = async () => {
   let isCanceled = false
   const response = await prompts([step_type], {
     onSubmit: (prompt, answers) => {
@@ -49,4 +49,4 @@ const step_type = {
   } catch (error) {
     console.log(chalk.bgRed.white(' init Fail ', error))
   }
-})()
+}
