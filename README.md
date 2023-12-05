@@ -13,9 +13,27 @@ yarn global add OwlTing/cz
 
 # pnpm
 pnpm install -g OwlTing/cz
+
+# bun
+bun install -g OwlTing/cz
 ```
 
 > Add `export PATH="$(yarn global bin):$PATH"` to your `~./zshrc` if you installed it by yarn global
+
+## Update version
+```shell
+# npm
+npm update -g owlting_cz
+
+# yarn
+yarn global upgrade owlting_cz
+
+# pnpm
+pnpm update -g owlting_cz
+
+# bun
+bun update -g owlting_cz
+```
 
 ## Uninstall
 ```shell
@@ -27,6 +45,9 @@ yarn global remove owlting_cz
 
 # pnpm
 pnpm uninstall -g owlting_cz
+
+# bun
+bun remove -g owlting_cz
 ```
 
 ## Commands
@@ -163,3 +184,4 @@ input Jira issue ID
 
 - [x] adapt for other projects prefix
 - [ ] unit test
+- [ ] CLI
