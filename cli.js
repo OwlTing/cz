@@ -7,6 +7,13 @@ const chalk = require('chalk')
 const fs = require('fs')
 
 let defaultProjectValue = ''
+try {
+  const config = fs.readFileSync(`${__dirname}/cz_config.json`)
+  defaultProjectValue = JSON.parse(config).defaultProject
+} catch (e) {
+  console.log(chalk.yellow.italic(' 💡 You can try `cz -i` to choose a default project prefix. '))
+  defaultProjectValue = ''
+}
 
 const typesList = types.map(type => ({
   title: type.name,
@@ -90,14 +97,6 @@ const step_jira_id = {
 }
 
 module.exports = async () => {
-  try {
-    const config = fs.readFileSync(`${__dirname}/cz_config.json`)
-    defaultProjectValue = JSON.parse(config).defaultProject
-  } catch (e) {
-    console.log(chalk.red(' 💡 You can try `cz -i` to choose a default project prefix. '))
-    defaultProjectValue = ''
-  }
-
   let isCanceled = false
   const order = [
     step_type,
