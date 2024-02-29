@@ -1,10 +1,10 @@
 {
 	"name": "owlting_cz",
-	"version": "2.0.1",
+	"version": "2.1.0",
 	"description": "create-commit for OwlTing",
 	"dependencies": {
-		"chalk": "^4.1.2",
 		"execa": "^5.1.1",
+		"picocolors": "^1.0.0",
 		"prompts": "^2.4.2",
 		"yargs": "^17.7.2"
 	},

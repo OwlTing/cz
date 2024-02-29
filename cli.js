@@ -3,7 +3,7 @@ const prompts = require('prompts')
 const execa = require('execa')
 const types = require('./types')
 const projects = require('./projects')
-const chalk = require('chalk')
+const picocolors = require('picocolors')
 const fs = require('fs')
 
 let defaultProjectValue = ''
@@ -11,7 +11,7 @@ try {
   const config = fs.readFileSync(`${__dirname}/cz_config.json`)
   defaultProjectValue = JSON.parse(config).defaultProject
 } catch (e) {
-  console.log(chalk.yellow.italic(' 💡 You can try `cz -i` to choose a default project prefix. '))
+  console.log(picocolors.yellow(' 💡 You can try `cz -i` to choose a default project prefix. '))
   defaultProjectValue = ''
 }
 
@@ -86,7 +86,7 @@ const step_jira_id = {
   name: 'jira_id',
   message: 'Jira issue id',
   onRender () {
-    this.msg = chalk.bgBlueBright.white(' Jira issue ID ')
+    this.msg = picocolors.bgBlueBright.white(' Jira issue ID ')
   },
   validate: value => {
     if (!value) {
@@ -120,7 +120,7 @@ module.exports = async () => {
   })
 
   if (isCanceled) {
-    console.log(chalk.magentaBright(' commit abort. '))
+    console.log(picocolors.magenta(' commit abort. '))
     return false
   }
 
@@ -138,17 +138,17 @@ module.exports = async () => {
     const branchHashName = commitResult.stdout.match(/\[(.*)\]/).pop()
     const [branchName, branchHash] = branchHashName.split(' ')
     console.log('-----------------------------------------------------------')
-    console.log(chalk(commitResult.stdout))
+    console.log(picocolors.dim(commitResult.stdout))
     if (commitResult.stderr !== '') {
       console.log('-----------------------------------------------------------')
-      console.log(chalk(commitResult.stderr))
+      console.log(picocolors.dim(commitResult.stderr))
     }
     console.log('-----------------------------------------------------------')
-    console.log(chalk.green(result))
-    console.log(chalk.bold(branchName), chalk.bgCyanBright.black(` ${branchHash} `))
+    console.log(picocolors.green(result))
+    console.log(picocolors.bold(branchName), picocolors.bgCyan(` ${branchHash} `))
   } catch (error) {
-    console.log(chalk.redBright(error.stderr))
-    if (error.exitCode === 1) console.log(chalk.bgRed.white(' Nothing to commit. '))
+    console.log(picocolors.red(error.stderr))
+    if (error.exitCode === 1) console.log(picocolors.bgRed(' No changes added to commit. '))
     else console.error(error)
   }
 }

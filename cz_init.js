@@ -2,7 +2,7 @@
 const fs = require('fs')
 const projects = require('./projects')
 const prompts = require('prompts')
-const chalk = require('chalk')
+const picocolors = require('picocolors')
 
 const projectsList = projects.map(project => ({
   title: project.name,
@@ -34,7 +34,7 @@ module.exports = async () => {
   })
 
   if (isCanceled) {
-    console.log(chalk.magentaBright(' init abort. '))
+    console.log(picocolors.magenta(' init abort. '))
     return false
   }
 
@@ -45,8 +45,8 @@ module.exports = async () => {
       `${__dirname}/cz_config.json`,
       `${JSON.stringify({ defaultProject: set_default_project } || {}, null, 2)}`,
     )
-    console.log(chalk.green(` default project set: ${set_default_project} `))
+    console.log(picocolors.green(` default project set: ${set_default_project} `))
   } catch (error) {
-    console.log(chalk.bgRed.white(' init Fail ', error))
+    console.log(picocolors.bgRed.white(' init Fail ', error))
   }
 }
