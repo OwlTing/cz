@@ -11,7 +11,7 @@ try {
   const config = fs.readFileSync(`${__dirname}/cz_config.json`)
   defaultProjectValue = JSON.parse(config).defaultProject
 } catch (e) {
-  console.log(picocolors.yellow(' 💡 You can try `cz -i` to choose a default project prefix. '))
+  console.log(picocolors.yellow(picocolors.italic(' 💡 You can try `cz -i` to choose a default project prefix. ')))
   defaultProjectValue = ''
 }
 
@@ -40,6 +40,19 @@ const step_message = {
   validate: value => {
     if (!value) {
       return 'Commit message is required.'
+    }
+    return true
+  }
+}
+
+const step_description = {
+  type: 'text',
+  name: 'commit_description',
+  message: 'Commit description (optional)',
+  initial: '',
+  validate: value => {
+    if (value.length > 100) {
+      return 'Description is too long.'
     }
     return true
   }
@@ -86,7 +99,7 @@ const step_jira_id = {
   name: 'jira_id',
   message: 'Jira issue id',
   onRender () {
-    this.msg = picocolors.bgBlueBright.white(' Jira issue ID ')
+    this.msg = picocolors.bgCyan(picocolors.white(' Jira issue ID '))
   },
   validate: value => {
     if (!value) {
@@ -101,6 +114,7 @@ module.exports = async () => {
   const order = [
     step_type,
     step_message,
+    step_description,
     step_is_jira,
     defaultProject.value ? step_is_default_project : null,
     step_project_type,
@@ -124,18 +138,19 @@ module.exports = async () => {
     return false
   }
 
-  const { commit_type, commit_message, is_jira, is_default_project, project_type, jira_id } = response
+  const { commit_type, commit_message, commit_description, is_jira, is_default_project, project_type, jira_id } = response
   const type = typesList.find(type => type.value === commit_type)
-  const msg = `${type.emoji} ${commit_type}: ${commit_message}`
+  const commitTitle = `${type.emoji} ${commit_type}: ${commit_message}`
   const typeResponse = is_default_project ? defaultProject.value : project_type
   const projectType = projects.find(project => project.value === typeResponse)
   const result = is_jira
-    ? `[${projectType.prefix}-${jira_id}] ${msg}`
-    : msg
+    ? `[${projectType.prefix}-${jira_id}] ${commitTitle}`
+    : commitTitle
 
   try {
-    const commitResult = await execa('git', ['commit', '-m', result])
-    const branchHashName = commitResult.stdout.match(/\[(.*)\]/).pop()
+    const commands = commit_description ? ['commit', '-m', result, '-m', commit_description] : ['commit', '-m', result]
+    const commitResult = await execa('git', commands)
+    const branchHashName = commitResult.stdout.match(/\[(.*?)\]/).pop()
     const [branchName, branchHash] = branchHashName.split(' ')
     console.log('-----------------------------------------------------------')
     console.log(picocolors.dim(commitResult.stdout))
@@ -144,8 +159,11 @@ module.exports = async () => {
       console.log(picocolors.dim(commitResult.stderr))
     }
     console.log('-----------------------------------------------------------')
-    console.log(picocolors.green(result))
-    console.log(picocolors.bold(branchName), picocolors.bgCyan(` ${branchHash} `))
+    console.log(`${picocolors.bgGreen(picocolors.bold(' Title       '))} ${picocolors.green(result)}`)
+    if (commit_description) {
+      console.log(`${picocolors.bgGreen(picocolors.bold(' Description '))} ${picocolors.green(commit_description)}`)
+    }
+    console.log(`${picocolors.bgGreen(picocolors.bold(' Commit hash '))} ${picocolors.bold(picocolors.cyan(` ${branchHash} `))} (${picocolors.italic(picocolors.green(branchName))})`)
   } catch (error) {
     console.log(picocolors.red(error.stderr))
     if (error.exitCode === 1) console.log(picocolors.bgRed(' No changes added to commit. '))
