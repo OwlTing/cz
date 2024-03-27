@@ -5,6 +5,9 @@ const types = require('./types')
 const projects = require('./projects')
 const picocolors = require('picocolors')
 const fs = require('fs')
+const checkVersion = require('./checkVersion')
+
+checkVersion()
 
 let defaultProjectValue = ''
 try {
