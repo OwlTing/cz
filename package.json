@@ -1,6 +1,6 @@
 {
 	"name": "owlting_cz",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"description": "create-commit for OwlTing",
 	"dependencies": {
 		"execa": "^5.1.1",
