@@ -1,4 +1,10 @@
-module.exports = [
+interface Project {
+  name: string
+  prefix: string
+  value: string
+}
+
+export default <Project[]>[
   {
     name: 'OwlPay',
     prefix: 'OWLPAY',
