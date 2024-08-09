@@ -1,16 +1,23 @@
 {
 	"name": "owlting_cz",
-	"version": "2.2.0",
+	"version": "3.0.0",
 	"description": "create-commit for OwlTing",
+	"type": "module",
 	"dependencies": {
 		"execa": "^5.1.1",
 		"picocolors": "^1.0.0",
 		"prompts": "^2.4.2",
+		"unbuild": "^2.0.0",
 		"yargs": "^17.7.2"
 	},
-	"main": "index.js",
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "unbuild"
+	},
 	"bin": {
-		"cz": "index.js"
+		"cz": "bin/index.mjs"
 	},
 	"keywords": [
 		"cli",
@@ -19,5 +26,10 @@
 		"prompt",
 		"commit"
 	],
-	"author": "Nick"
+	"author": "Nick",
+	"devDependencies": {
+		"@types/node": "^22.1.0",
+		"@types/prompts": "^2.4.9",
+		"@types/yargs": "^17.0.33"
+	}
 }

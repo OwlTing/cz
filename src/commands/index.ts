@@ -1,21 +1,26 @@
-#!/usr/bin/env node
-const prompts = require('prompts')
-const execa = require('execa')
-const types = require('./types')
-const projects = require('./projects')
-const picocolors = require('picocolors')
-const fs = require('fs')
+import prompts from 'prompts'
+import execa from 'execa'
+import { projects, commitTypes } from '../helper'
+import picocolors from 'picocolors'
+import fs from 'fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const rootPath = resolve(__dirname, '../')
 
 let defaultProjectValue = ''
+
 try {
-  const config = fs.readFileSync(`${__dirname}/cz_config.json`)
-  defaultProjectValue = JSON.parse(config).defaultProject
+  const filePath = resolve(rootPath, 'keep/cz_config.json')
+  const config = fs.readFileSync(filePath)
+  defaultProjectValue = JSON.parse(config as any).defaultProject
 } catch (e) {
   console.log(picocolors.yellow(picocolors.italic(' 💡 You can try `cz -i` to choose a default project prefix. ')))
   defaultProjectValue = ''
 }
 
-const typesList = types.map(type => ({
+const typesList = commitTypes.map(type => ({
   title: type.name,
   description: `${type.emoji} ${type.description}`,
   value: type.value,
@@ -33,11 +38,11 @@ const step_type = {
 const step_message = {
   type: 'text',
   name: 'commit_message',
-  message: prev => {
-    const target = typesList.find(type => type.value === prev)
+  message: (prev: string) => {
+    const target = typesList.find(type => type.value === prev)!
     return `${target.emoji} ${target.title}`
   },
-  validate: value => {
+  validate: (value: string) => {
     if (!value) {
       return 'Commit message is required.'
     }
@@ -50,7 +55,7 @@ const step_description = {
   name: 'commit_description',
   message: 'Commit description (optional)',
   initial: '',
-  validate: value => {
+  validate: (value: string) => {
     if (value.length > 100) {
       return 'Description is too long.'
     }
@@ -70,19 +75,20 @@ const projectsList = projects.map(project => ({
   description: `[${project.prefix}-13845] title`,
   value: project.value
 }))
-const defaultProject = projectsList.find(project => project.value === defaultProjectValue) || {}
+
+const defaultProject = projectsList.find(project => project.value === defaultProjectValue)!
 
 const step_is_default_project = {
-  type: prev => prev ? 'confirm' : null,
+  type: (prev: boolean) => prev ? 'confirm' : null,
   name: 'is_default_project',
-  message: `use '${defaultProject.title}' pattern? e.g. ${defaultProject.description}`,
+  message: `use '${defaultProject?.title}' pattern? e.g. ${defaultProject?.description}`,
   initial: true
 }
 
 const step_project_type = {
-  type: (prev, { is_jira }) => {
+  type: (prev: string, { is_jira }: { is_jira: boolean }) => {
     return is_jira
-      ? defaultProject.value && prev
+      ? defaultProject?.value && prev
         ? null
         : 'autocomplete'
       : null
@@ -95,13 +101,13 @@ const step_project_type = {
 }
 
 const step_jira_id = {
-  type: prev => prev ? 'number' : null,
+  type: (prev: boolean) => prev ? 'number' : null,
   name: 'jira_id',
   message: 'Jira issue id',
   onRender () {
-    this.msg = picocolors.bgCyan(picocolors.white(' Jira issue ID '))
+    (this as any).msg = picocolors.bgCyan(picocolors.white(' Jira issue ID ')) // TODO: fix type
   },
-  validate: value => {
+  validate: (value: number) => {
     if (!value) {
       return 'Jira issue ID is required.'
     }
@@ -109,17 +115,17 @@ const step_jira_id = {
   }
 }
 
-module.exports = async () => {
+export default async () => {
   let isCanceled = false
   const order = [
     step_type,
     step_message,
     step_description,
     step_is_jira,
-    defaultProject.value ? step_is_default_project : null,
+    defaultProject?.value ? step_is_default_project : null,
     step_project_type,
     step_jira_id
-  ].filter(Boolean)
+  ].filter(Boolean) as any // TODO: fix type
   const response = await prompts(order, {
     onSubmit: (prompt, answers) => {
       if (answers === undefined) {
@@ -139,10 +145,10 @@ module.exports = async () => {
   }
 
   const { commit_type, commit_message, commit_description, is_jira, is_default_project, project_type, jira_id } = response
-  const type = typesList.find(type => type.value === commit_type)
+  const type = typesList.find(type => type.value === commit_type)!
   const commitTitle = `${type.emoji} ${commit_type}: ${commit_message}`
-  const typeResponse = is_default_project ? defaultProject.value : project_type
-  const projectType = projects.find(project => project.value === typeResponse)
+  const typeResponse = is_default_project ? defaultProject?.value : project_type
+  const projectType = projects.find(project => project.value === typeResponse)!
   const result = is_jira
     ? `[${projectType.prefix}-${jira_id}] ${commitTitle}`
     : commitTitle
@@ -150,7 +156,7 @@ module.exports = async () => {
   try {
     const commands = commit_description ? ['commit', '-m', result, '-m', commit_description] : ['commit', '-m', result]
     const commitResult = await execa('git', commands)
-    const branchHashName = commitResult.stdout.match(/\[(.*?)\]/).pop()
+    const branchHashName = commitResult.stdout.match(/\[(.*?)\]/)!.pop()!
     const [branchName, branchHash] = branchHashName.split(' ')
     console.log('-----------------------------------------------------------')
     console.log(picocolors.dim(commitResult.stdout))
@@ -164,7 +170,7 @@ module.exports = async () => {
       console.log(`${picocolors.bgGreen(picocolors.bold(' Description '))} ${picocolors.green(commit_description)}`)
     }
     console.log(`${picocolors.bgGreen(picocolors.bold(' Commit hash '))} ${picocolors.bold(picocolors.cyan(` ${branchHash} `))} (${picocolors.italic(picocolors.green(branchName))})`)
-  } catch (error) {
+  } catch (error: any) {
     console.log(picocolors.red(error.stderr))
     if (error.exitCode === 1) console.log(picocolors.bgRed(' No changes added to commit. '))
     else console.error(error)

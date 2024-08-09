@@ -1,8 +1,12 @@
-#!/usr/bin/env node
-const fs = require('fs')
-const projects = require('./projects')
-const prompts = require('prompts')
-const picocolors = require('picocolors')
+import fs from 'fs'
+import { projects } from '../helper'
+import prompts from 'prompts'
+import picocolors from 'picocolors'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const rootPath = resolve(__dirname, '../')
 
 const projectsList = projects.map(project => ({
   title: project.name,
@@ -16,9 +20,9 @@ const step_type = {
   message: 'Set default project prefix.',
   choices: projectsList,
   fallback: 'No matched project.'
-}
+} as const // TODO: Fix this type
 
-module.exports = async () => {
+export default async () => {
   let isCanceled = false
   const response = await prompts([step_type], {
     onSubmit: (prompt, answers) => {
@@ -41,12 +45,13 @@ module.exports = async () => {
   const { set_default_project } = response
 
   try {
+    const filePath = resolve(rootPath, 'keep/cz_config.json')
     fs.writeFileSync(
-      `${__dirname}/cz_config.json`,
+      filePath,
       `${JSON.stringify({ defaultProject: set_default_project } || {}, null, 2)}`,
     )
     console.log(picocolors.green(` default project set: ${set_default_project} `))
   } catch (error) {
-    console.log(picocolors.bgRed.white(' init Fail ', error))
+    console.log(picocolors.bgRed(picocolors.white(`init Fail: ${error}`)))
   }
 }
