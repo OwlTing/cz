@@ -19,7 +19,9 @@
 		"test:run": "vitest run",
 		"test:watch": "vitest --watch",
 		"test:coverage": "vitest run --coverage",
-		"test:ui": "vitest --ui"
+		"test:ui": "vitest --ui",
+		"hooks:install": "lefthook install",
+		"hooks:uninstall": "lefthook uninstall"
 	},
 	"bin": {
 		"cz": "bin/index.mjs"
@@ -40,6 +42,7 @@
 		"@types/prompts": "^2.4.9",
 		"@types/yargs": "^17.0.33",
 		"@vitest/coverage-v8": "^2.0.0",
+		"lefthook": "^1.11.13",
 		"vitest": "^2.0.0"
 	}
 }

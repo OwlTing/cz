@@ -88,7 +88,7 @@ const commitTypes = [
     name: "storybook",
     emoji: "\u{1F4DA}",
     description: "New storybook",
-    value: "story"
+    value: "storybook"
   },
   {
     name: "revert",

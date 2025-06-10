@@ -1,0 +1,22 @@
+pre-commit:
+  parallel: true
+  commands:
+    tests:
+      run: pnpm test:run
+      fail_text: "❌ Tests failed! Please fix the issues before committing."
+      stage_fixed: false
+
+    type-check:
+      run: pnpm build
+      fail_text: "❌ TypeScript compilation failed! Please fix type errors before committing."
+      stage_fixed: false
+
+pre-push:
+  parallel: true
+  commands:
+    coverage:
+      run: pnpm test:coverage
+      fail_text: "❌ Coverage check failed! Ensure tests meet coverage requirements."
+
+# Configuration
+assert_lefthook_installed: true
