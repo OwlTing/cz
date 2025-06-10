@@ -20,6 +20,7 @@
 		"test:watch": "vitest --watch",
 		"test:coverage": "vitest run --coverage",
 		"test:ui": "vitest --ui",
+		"coverage:badge": "pnpm test:coverage && node scripts/generate-coverage-badge.js",
 		"hooks:install": "lefthook install",
 		"hooks:uninstall": "lefthook uninstall"
 	},

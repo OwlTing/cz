@@ -3,3 +3,10 @@ node_modules
 .vscode
 keep/*
 !keep/README.md
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Generated files
+coverage-badge.json
