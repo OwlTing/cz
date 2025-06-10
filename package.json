@@ -1,6 +1,6 @@
 {
 	"name": "owlting_cz",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "create-commit for OwlTing",
 	"type": "module",
 	"dependencies": {
