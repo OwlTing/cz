@@ -180,6 +180,12 @@ input Jira issue ID
   emoji: '📚',
   description: 'New storybook',
   value: 'story'
+},
+{
+  name: 'revert',
+  emoji: '🔙',
+  description: 'Revert a commit',
+  value: 'revert'
 }
 ```
 #### Inspired by [cz-cli](https://github.com/commitizen/cz-cli)

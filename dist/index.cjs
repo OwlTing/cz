@@ -89,6 +89,12 @@ const commitTypes = [
     emoji: "\u{1F4DA}",
     description: "New storybook",
     value: "story"
+  },
+  {
+    name: "revert",
+    emoji: "\u{1F519}",
+    description: "Revert a commit",
+    value: "revert"
   }
 ];
 

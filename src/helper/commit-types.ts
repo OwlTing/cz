@@ -70,5 +70,11 @@ export default [
     emoji: '📚',
     description: 'New storybook',
     value: 'story'
+  },
+  {
+    name: 'revert',
+    emoji: '🔙',
+    description: 'Revert a commit',
+    value: 'revert'
   }
 ]
