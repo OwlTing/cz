@@ -1,6 +1,6 @@
 {
 	"name": "owlting_cz",
-	"version": "3.1.0",
+	"version": "3.2.0",
 	"description": "create-commit for OwlTing",
 	"type": "module",
 	"dependencies": {
@@ -14,7 +14,12 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"build": "unbuild"
+		"build": "unbuild",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:watch": "vitest --watch",
+		"test:coverage": "vitest run --coverage",
+		"test:ui": "vitest --ui"
 	},
 	"bin": {
 		"cz": "bin/index.mjs"
@@ -27,9 +32,14 @@
 		"commit"
 	],
 	"author": "Nick",
+	"engines": {
+		"node": ">=14.0.0"
+	},
 	"devDependencies": {
 		"@types/node": "^22.1.0",
 		"@types/prompts": "^2.4.9",
-		"@types/yargs": "^17.0.33"
+		"@types/yargs": "^17.0.33",
+		"@vitest/coverage-v8": "^2.0.0",
+		"vitest": "^2.0.0"
 	}
 }

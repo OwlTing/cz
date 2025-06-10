@@ -48,7 +48,7 @@ export default async () => {
     const filePath = resolve(rootPath, 'keep/cz_config.json')
     fs.writeFileSync(
       filePath,
-      `${JSON.stringify({ defaultProject: set_default_project } || {}, null, 2)}`,
+      `${JSON.stringify({ defaultProject: set_default_project }, null, 2)}`
     )
     console.log(picocolors.green(` default project set: ${set_default_project} `))
   } catch (error) {

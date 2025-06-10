@@ -179,7 +179,7 @@ input Jira issue ID
   name: 'storybook',
   emoji: '📚',
   description: 'New storybook',
-  value: 'story'
+  value: 'storybook'
 },
 {
   name: 'revert',
@@ -193,5 +193,5 @@ input Jira issue ID
 ## Todo
 
 - [x] adapt for other projects prefix
-- [ ] unit test
+- [x] unit test
 - [ ] CLI

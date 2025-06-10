@@ -69,7 +69,7 @@ export default [
     name: 'storybook',
     emoji: '📚',
     description: 'New storybook',
-    value: 'story'
+    value: 'storybook'
   },
   {
     name: 'revert',
