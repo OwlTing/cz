@@ -1,10 +1,8 @@
-interface Project {
-  name: string
-  prefix: string
-  value: string
-}
+import type { ProjectType } from '../types'
 
-export default <Project[]>[
+export type { ProjectType }
+
+export default <ProjectType[]>[
   {
     name: 'OwlPay',
     prefix: 'OWLPAY',

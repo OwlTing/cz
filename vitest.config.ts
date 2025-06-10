@@ -15,7 +15,8 @@ export default defineConfig({
         'coverage/**',
         '*.config.{js,ts}',
         'bin/**',
-        'scripts/**'
+        'scripts/**',
+        'src/types/**'
       ],
       all: true
     }
@@ -25,4 +26,4 @@ export default defineConfig({
       '@': './src'
     }
   }
-}) 
+})

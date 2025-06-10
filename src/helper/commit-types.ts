@@ -1,4 +1,8 @@
-export default [
+import type { CommitType } from '../types'
+
+export type { CommitType }
+
+export default <CommitType[]>[
   {
     name: 'chore',
     emoji: '🧹',

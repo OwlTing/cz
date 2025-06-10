@@ -1,18 +1,30 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import fs from 'fs'
 
 // Mock dependencies before importing the module
 vi.mock('fs')
+vi.mock('prompts')
+vi.mock('execa')
 vi.mock('picocolors', () => ({
   default: {
     yellow: (text: string) => text,
-    italic: (text: string) => text
+    italic: (text: string) => text,
+    magenta: (text: string) => text,
+    bgGreen: (text: string) => text,
+    bold: (text: string) => text,
+    green: (text: string) => text,
+    cyan: (text: string) => text,
+    dim: (text: string) => text,
+    red: (text: string) => text,
+    bgRed: (text: string) => text,
+    bgCyan: (text: string) => text,
+    white: (text: string) => text
   }
 }))
 
 const mockFs = vi.mocked(fs)
 
-describe('CLI module loading', () => {
+describe('CLI module loading behavior after refactoring', () => {
   const mockConsoleLog = vi.fn()
 
   beforeEach(() => {
@@ -20,39 +32,28 @@ describe('CLI module loading', () => {
     console.log = mockConsoleLog
   })
 
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
-
-  it('should show warning when config file is missing during module load', async () => {
+  it('should not show warning during module load (warning moved to function execution)', async () => {
     // Mock config file read error
     mockFs.readFileSync = vi.fn().mockImplementation(() => {
       throw new Error('File not found')
     })
 
-    // Import the module to trigger the warning
+    // Import the module - this should NOT trigger any console.log
     await import('../../src/commands/index')
 
-    expect(mockConsoleLog).toHaveBeenCalledWith(
-      expect.stringContaining('You can try `cz -i` to choose a default project prefix')
-    )
+    expect(mockConsoleLog).not.toHaveBeenCalled()
   })
 
-  it('should not show warning when config file exists during module load', async () => {
-    // Mock config file exists
+  it('should load module successfully when config file exists', async () => {
+    // Mock successful config file read
     mockFs.readFileSync = vi.fn().mockReturnValue(
       JSON.stringify({ defaultProject: 'owlpay' })
     )
 
-    // Clear any previous console calls
-    mockConsoleLog.mockClear()
-
     // Import the module
     await import('../../src/commands/index')
 
-    // Should not have warning message
-    expect(mockConsoleLog).not.toHaveBeenCalledWith(
-      expect.stringContaining('You can try `cz -i` to choose a default project prefix')
-    )
+    // No console.log should be called during module loading
+    expect(mockConsoleLog).not.toHaveBeenCalled()
   })
 })
