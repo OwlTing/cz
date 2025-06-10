@@ -1,5 +1,7 @@
 # create commit
 ![](https://img.shields.io/badge/node-%5E14-brightgreen.svg)
+![Coverage](https://img.shields.io/badge/coverage-83%25-brightgreen)
+![Tests](https://img.shields.io/badge/tests-49%20passed-brightgreen)
 
 create commit in human way.
 
@@ -19,6 +21,28 @@ bun install -g OwlTing/cz
 ```
 
 > Add `export PATH="$(yarn global bin):$PATH"` to your `~./zshrc` if you installed it by yarn global
+
+## Development
+
+### Running Tests
+```shell
+# Run tests in watch mode
+pnpm test
+
+# Run tests once
+pnpm test:run
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Generate coverage badge
+pnpm coverage:badge
+```
+
+### Pre-commit Hooks
+This project uses [lefthook](https://github.com/evilmartians/lefthook) for pre-commit hooks that automatically run:
+- Unit tests (`pnpm test:run`)
+- TypeScript compilation check (`pnpm build`)
 
 ## Update version
 ```shell
@@ -179,7 +203,7 @@ input Jira issue ID
   name: 'storybook',
   emoji: '📚',
   description: 'New storybook',
-  value: 'story'
+  value: 'storybook'
 },
 {
   name: 'revert',
@@ -193,5 +217,5 @@ input Jira issue ID
 ## Todo
 
 - [x] adapt for other projects prefix
-- [ ] unit test
+- [x] unit test
 - [ ] CLI

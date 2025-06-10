@@ -1,4 +1,8 @@
-export default [
+import type { CommitType } from '../types'
+
+export type { CommitType }
+
+export default <CommitType[]>[
   {
     name: 'chore',
     emoji: '🧹',
@@ -69,7 +73,7 @@ export default [
     name: 'storybook',
     emoji: '📚',
     description: 'New storybook',
-    value: 'story'
+    value: 'storybook'
   },
   {
     name: 'revert',
