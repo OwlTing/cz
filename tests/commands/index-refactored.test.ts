@@ -121,7 +121,7 @@ describe('Refactored CLI Functions (TDD Style)', () => {
       it('should build projects list correctly', () => {
         const result = buildProjectsList()
 
-        expect(result).toHaveLength(5)
+        expect(result).toHaveLength(6)
         expect(result[0]).toMatchObject({
           title: 'OwlPay',
           description: '[OWLPAY-13845] title',

@@ -112,6 +112,11 @@ const projects = [
     name: "Wallet Pro",
     prefix: "WP",
     value: "wallet-pro"
+  },
+  {
+    name: "Harbor",
+    prefix: "HARBOR",
+    value: "harbor"
   }
 ];
 
